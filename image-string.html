@@ -1,0 +1,45 @@
+<body>
+    <script>
+        function ConvertToBase64(src, type) {
+            var canvas = document.createElement('canvas');
+            canvas.width = src.width;
+            canvas.height = src.height;
+
+            //You can transform/alter image here using html canvas funtions if needed
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(src, 0, 0);
+
+            //Note you do need mime-type of the image somehow to use this. However, this can also be used to convert data-type.
+            return canvas.toDataURL(type);
+        }
+
+        function Base64ToImage(string, imgStore) {
+            imgStore.src = string.value;
+        }
+
+        //Button Handlers
+        function ImgToBase64Click() {
+            img = document.getElementById("originalImage");
+            string = document.getElementById("b64string");
+
+            string.value = ConvertToBase64(img, "image/png")
+        }
+
+        function Base64ToImageClick() {
+            img = document.getElementById("originalImage");
+            string = document.getElementById("b64string");
+
+            Base64ToImage(string, img);
+        }
+    </script>
+
+    <div>
+        <hr>Image:
+        <!--put your image in this src. it needs to be in a location which allows cross-origin -->
+        <br><img id="originalImage" crossorigin="anonymous" src="" />
+        <hr>String:
+        <br><textarea id="b64string" rows="20" cols="40"></textarea>
+        <button onclick="ImgToBase64Click()">Image -> Base64</button>
+        <button onclick="Base64ToImageClick()">Base64 -> Image</button>
+    </div>
+</body>
